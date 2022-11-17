@@ -81,5 +81,15 @@ object Currying {
     val f1: Int => Int        = f(_,1)
     val fc: (Int, Int) => Int = f(_,_)
 
+    def modifyList(l: List[Int], f: Int => Int): List[Int] = l match
+      case x :: xs => f(x) :: modifyList(xs, f)
+      case List() => List()
+
+    def modifyList2(l: List[Int], f: Int => Int): List[Int] = l.map(f)
+
+
+    val l : List[Int] = List(1, 2, 3, 4, 5)
+    val l2: List[Int] = modifyList(l,_+5)
+
   }
 }
