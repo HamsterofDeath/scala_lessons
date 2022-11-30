@@ -110,17 +110,17 @@ object Blatt6b extends App {
 
   def streicheFunktional[T](gleich: (T, T) => Boolean)(x: T, list: List[T]): List[T] = {
     list.foldLeft((List.empty[T], false))((tup,e) => {
-      val(acc,kicked) = tup
-      val addThisElement = !gleich(x,e) || gleich(x,e) && !kicked
+      val(acc,hasKickedElement) = tup
+      val addThisElement = !gleich(x,e) || hasKickedElement
       val newList = if(addThisElement) {
         (acc :+ e)
       } else {
         acc
       }
-      (newList, kicked || gleich(x,e))
+      (newList, hasKickedElement || gleich(x,e))
     })._1
   }
-
+  println("test")
   println (streicheFunktional[Int](_ == _)(5, List(1,3,5,7,6,4,99,43,4,3,2,1,5)))
 
   def maxSort2[T](kg: (T, T) => Boolean, gleich: (T, T) => Boolean)(
@@ -134,6 +134,7 @@ object Blatt6b extends App {
     }
   }
 
+  println(streicheFunktional[Int](_ ==_)(99, List(1,3,5,7,6,4,99,43,4,3,2,1,5)))
   println(maxSort2[Int](_ <= _,_ ==_)(List(1,3,5,7,6,4,99,43,4,3,2,1,5)))
 
 }
