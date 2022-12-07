@@ -16,6 +16,9 @@ object Snürfel extends App {
   val alongX = List(XYZ(-1, 0, 0), XYZ(1, 0, 0))
   val alongY = List(XYZ(0, -1, 0), XYZ(0, 1, 0))
   val alongZ = List(XYZ(0, 0, -1), XYZ(0, 0, 1))
+  val alongXY = alongX ++ alongY
+  val alongXZ = alongX ++ alongZ
+  val alongYZ = alongY ++ alongZ
 
   def recur(sectionsLeft: List[Int], blocked: List[XYZ]): Unit = {
     if (sectionsLeft.isEmpty) {
@@ -25,16 +28,16 @@ object Snürfel extends App {
       val before      = blocked.tail.head
       val nextOptions = {
         if (turnHere.x != before.x) {
-          // nach rechts oder links
-          alongY ++ alongZ
+          alongYZ
         } else if (turnHere.y != before.y) {
-          alongX ++ alongZ
+          alongXZ
         } else if (turnHere.z != before.z) {
-          alongX ++ alongY
+          alongXY
         } else {
           throw new RuntimeException(":(")
         }
       }
+     // println(s"Checking $nextOptions")
 
       nextOptions.foreach { nextOption =>
         def nextSectionCoordinates = Iterator.iterate(turnHere + nextOption)(_ + nextOption)
@@ -45,6 +48,7 @@ object Snürfel extends App {
         }
 
         if (validChoice) {
+      //    println(s"$nextOption is valid")
           recur(sectionsLeft.tail, nextSectionCoordinates.toList.reverse ++ blocked)
         }
 
