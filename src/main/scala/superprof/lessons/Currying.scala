@@ -12,6 +12,7 @@ object Currying {
     f(a,1)
   }
 
+
   def main(args: Array[String]): Unit = {
     val function : (Int,Int) => Int = (a,b) => a+b
     val function2  = (a:Int,b:Int) => a+b
